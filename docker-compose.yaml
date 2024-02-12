@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  rg_mysql:
+    image: mysql:latest
+    container_name: rg_mysql_database
+    hostname: rg_mysql
+    ports:
+      - ${MYSQL_PORT}:${MYSQL_PORT}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DB: ${MYSQL_DB}
+    volumes:
+      - rg:/var/lib/mysql
+    restart: unless-stopped
+  rg_api:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rg_nest_api
+    depends_on:
+      - rg_mysql
+    ports:
+      - ${PORT}:${PORT}
+    restart: always
+volumes:
+  rg:
