@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { AppExceptionFilter, AppResponseInterceptor } from '@app/common';
+import { AppExceptionFilter, AppResponseInterceptor, PrismaModule } from '@app/common';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 
@@ -14,7 +14,6 @@ import { UserModule } from './user/user.module';
       envFilePath: '.env',
       validationSchema: Joi.object({
         PORT: Joi.string().required(),
-        WS_PORT: Joi.string().required(),
         DATABASE_URL: Joi.string().required(),
         APP_NAME: Joi.string().required(),
         PREFIX_NAME: Joi.string().required(),
@@ -22,6 +21,7 @@ import { UserModule } from './user/user.module';
         JWT_SECRET: Joi.string().required(),
       }),
     }),
+    PrismaModule,
     AuthModule,
     UserModule,
   ],

@@ -1,5 +1,7 @@
 export type CurrentUser = {
-  sub: number;
-  iat: number;
-  exp: number;
+  sub: string;
+  role: string;
+  customerId: null | number;
+  cashierId: null | number;
+  merchantId: null | number;
 };

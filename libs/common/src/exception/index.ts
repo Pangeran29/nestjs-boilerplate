@@ -1,1 +1,1 @@
-export * from './prisma.internal-server.error.exception';
+export * from '../prisma/exception.prisma';

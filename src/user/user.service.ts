@@ -1,12 +1,13 @@
-import { PrismaException, PrismaService } from '@app/common';
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from './entities/user.entity';
+import { PrismaService } from '@app/common';
+import { Injectable } from '@nestjs/common';
+import { PrismaException } from '@app/common/exception';
+import { Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(user: User): Promise<User> {
+  async create(user: Prisma.UserCreateInput): Promise<User> {
     try {
       return await this.prismaService.user.create({ data: user });
     } catch (error) {
@@ -14,10 +15,10 @@ export class UserService {
     }
   }
 
-  async update(user: User): Promise<User> {
+  async update(id: number, user: Prisma.UserUpdateInput): Promise<User> {
     try {
       return await this.prismaService.user.update({
-        where: { id: user.id },
+        where: { id },
         data: user,
       });
     } catch (error) {
@@ -25,10 +26,10 @@ export class UserService {
     }
   }
 
-  async findById(userId: number): Promise<User> {
+  async findById(id: number): Promise<User> {
     try {
       return await this.prismaService.user.findUnique({
-        where: { id: userId },
+        where: { id },
       });
     } catch (error) {
       throw new PrismaException(error);

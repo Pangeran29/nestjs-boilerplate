@@ -1,10 +1,10 @@
+import { Prisma } from '@prisma/client';
 import {
   IsEmail,
   IsNotEmpty,
   IsString,
   IsStrongPassword,
 } from 'class-validator';
-import { User } from 'src/user/entities/user.entity';
 
 export class RegisterDto {
   @IsEmail()
@@ -15,13 +15,13 @@ export class RegisterDto {
   @IsStrongPassword()
   password: string;
 
-  intoUser(): User {
-    const user = new User();
-    user.email = this.email;
-    user.password = this.password;
-    return user;
+  intoUser(): Prisma.UserCreateInput {
+    return {
+      email: this.email,
+      password: this.password,
+    };
   }
-  
+
   setPassword(password: string): string {
     this.password = password;
     return password;
