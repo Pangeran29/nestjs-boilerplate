@@ -12,6 +12,9 @@ $ cp example.env .env
 $ openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
 $ openssl rsa -pubout -in private.pem -out public.pem
 
+# set up db 
+$ npx prisma init
+
 # installation 
 $ npm install
 
